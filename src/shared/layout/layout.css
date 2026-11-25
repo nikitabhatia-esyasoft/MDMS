@@ -4,7 +4,8 @@
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  background: #f5f7fb;
+  background: var(--color-background);
+  color: var(--color-text);
 }
 
 .app-body {
@@ -19,7 +20,7 @@
   min-width: 0;
   overflow-y: auto;
   padding: 28px;
-  background: #f5f7fb;
+  background: var(--color-background);
 }
 
 .app-header {
@@ -32,11 +33,10 @@
 
   padding: 0 24px;
 
-  background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
-
   position: relative;
   z-index: 40;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .header-left,
@@ -64,8 +64,8 @@
   place-items: center;
 
   border-radius: 9px;
-  background: #2563eb;
-  color: #ffffff;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
 }
 
 .icon-button {
@@ -82,13 +82,13 @@
   border-radius: 8px;
 
   background: transparent;
-  color: #475569;
+  color: var(--color-text-secondary);
 
   transition: background 150ms;
 }
 
 .icon-button:hover {
-  background: #f1f5f9;
+  background: var(--color-surface-hover);
 }
 
 .notification-count {
@@ -114,12 +114,11 @@
 
 .language-select {
   padding: 7px 9px;
-
-  border: 1px solid #e2e8f0;
   border-radius: 7px;
 
-  background: #ffffff;
-  color: #475569;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
 }
 
 .profile-container {
@@ -133,7 +132,7 @@
 
   border: none;
   background: transparent;
-  color: #475569;
+  color: var(--color-text-secondary);
 
   padding: 4px;
 }
@@ -146,11 +145,11 @@
   width: 190px;
   padding: 6px;
 
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
   border-radius: 10px;
 
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
 
   z-index: 50;
 }
@@ -168,7 +167,7 @@
   border-radius: 6px;
 
   background: transparent;
-  color: #334155;
+  color: var(--color-text);
 
   text-align: left;
   font-size: 14px;
@@ -176,11 +175,11 @@
 
 .profile-dropdown a:hover,
 .profile-dropdown button:hover {
-  background: #f1f5f9;
+  background: var(--color-surface-hover);
 }
 
 .profile-dropdown button:last-child {
-  color: #dc2626;
+  color: var(--color-danger);
 }
 
 .sidebar-wrapper {
@@ -197,8 +196,8 @@
 
   padding: 20px 12px;
 
-  background: #ffffff;
-  border-right: 1px solid #e2e8f0;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
 
   overflow-x: hidden;
   overflow-y: auto;
@@ -209,7 +208,7 @@
 .sidebar-role {
   padding: 8px 12px 20px;
 
-  color: #94a3b8;
+  color: var(--color-text-muted);
 
   font-size: 11px;
   font-weight: 600;
@@ -234,7 +233,7 @@
 
   border-radius: 8px;
 
-  color: #475569;
+  color: var(--color-text-secondary);
 
   font-size: 14px;
   font-weight: 500;
@@ -251,13 +250,13 @@
 }
 
 .sidebar-link:hover {
-  background: #f1f5f9;
-  color: #2563eb;
+  background: var(--color-surface-hover);
+  color: var(--color-primary);
 }
 
 .sidebar-link.active {
-  background: #2563eb;
-  color: #ffffff;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
 }
 
 .sidebar-footer {
@@ -265,7 +264,7 @@
   padding: 18px 12px 4px;
 
   font-size: 12px;
-  color: #94a3b8;
+  color: var(--color-text-muted);
 }
 
 .sidebar.collapsed {
@@ -347,7 +346,7 @@
     left: 0;
 
     border: none;
-    background: rgba(15, 23, 42, 0.4);
+    background: var(--color-overlay);
 
     z-index: 30;
   }
@@ -384,3 +383,52 @@
     padding: 5px;
   }
 }
+
+
+.card {
+  background: var(--color-surface);
+  color: var(--color-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+
+  padding: var(--space-5);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.status-success {
+  color: var(--color-success);
+  background: var(--color-success-bg);
+}
+
+.status-warning {
+  color: var(--color-warning);
+  background: var(--color-warning-bg);
+}
+
+.status-danger {
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
+}
+
+.form-input {
+  width: 100%;
+
+  background: var(--color-surface);
+  color: var(--color-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+
+  padding: var(--space-3);
+}
+
+.form-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.form-input:focus {
+  border-color: var(--color-primary);
+}
+

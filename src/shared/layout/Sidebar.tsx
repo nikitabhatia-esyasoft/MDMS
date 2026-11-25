@@ -53,7 +53,7 @@ function Sidebar({
       </nav>
 
       <div className="sidebar-footer">
-        MDMS • Phase 1
+        MDMS
       </div>
     </aside>
   );
