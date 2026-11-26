@@ -1,30 +1,81 @@
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Suspense, useEffect, useState } from "react";
 
-const AppLayout = () => {
+import { Outlet, useLocation } from "react-router-dom";
+
+import Header from "./Header";
+import Sidebar from "./Sidebar";
+
+import type { Role } from "../types/role";
+
+import "./layout.css";
+
+function isRole(value: unknown): value is Role {
+  return value === "user" || value === "zone" || value === "enterprise";
+}
+
+function getStoredRole(): Role {
+  const storedRole = sessionStorage.getItem("mdms-role");
+
+  return isRole(storedRole) ? storedRole : "user";
+}
+
+function AppLayout() {
+  const location = useLocation();
+
+  const segment = location.pathname.split("/")[1];
+
+  const role: Role = isRole(segment) ? segment : getStoredRole();
+
+  const [collapsed, setCollapsed] = useState(false);
+
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    sessionStorage.setItem("mdms-role", role);
+  }, [role]);
+
+  function toggleSidebar() {
+    if (window.innerWidth <= 768) {
+      setMobileOpen((previous) => !previous);
+    } else {
+      setCollapsed((previous) => !previous);
+    }
+  }
+
+  function closeMobileSidebar() {
+    setMobileOpen(false);
+  }
+
   return (
-    <div>
-      <header>
-        <h2>MDMS</h2>
-      </header>
+    <div className="app-layout">
+      <Header role={role} onToggleSidebar={toggleSidebar} />
 
-      <aside>
-        <nav>
-          <Link to="/user/dashboard">End User</Link>
-          {"|"}
-          <Link to="/zone/dashboard">Zone Dashboard</Link>
-          {"|"}
-          <Link to="/enterprise/dashboard">Enterprise Dashboard</Link>
-          {"|"}
-          <Link to="/profile">Profile</Link>
-        </nav>
-      </aside>
+      <div className="app-body">
+        {mobileOpen && (
+          <button
+            type="button"
+            className="sidebar-overlay"
+            onClick={closeMobileSidebar}
+            aria-label="Close sidebar"
+          />
+        )}
 
-      <main>
-        <Outlet />
-      </main>
+        <div className={`sidebar-wrapper ${mobileOpen ? "mobile-open" : ""}`}>
+          <Sidebar
+            role={role}
+            collapsed={collapsed}
+            onNavigate={closeMobileSidebar}
+          />
+        </div>
+
+        <main className="main-content">
+          <Suspense fallback={<p>Loading page...</p>}>
+            <Outlet />
+          </Suspense>
+        </main>
+      </div>
     </div>
   );
-};
+}
 
 export default AppLayout;
