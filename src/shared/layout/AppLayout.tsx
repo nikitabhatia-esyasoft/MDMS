@@ -1,13 +1,6 @@
-import {
-  Suspense,
-  useEffect,
-  useState,
-} from "react";
+import { Suspense, useEffect, useState } from "react";
 
-import {
-  Outlet,
-  useLocation,
-} from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 import Header from "./Header";
 import Sidebar from "./Sidebar";
@@ -15,23 +8,16 @@ import Sidebar from "./Sidebar";
 import type { Role } from "../types/role";
 
 import "./layout.css";
+import { Loader } from "../components";
 
 function isRole(value: unknown): value is Role {
-  return (
-    value === "user" ||
-    value === "zone" ||
-    value === "enterprise"
-  );
+  return value === "user" || value === "zone" || value === "enterprise";
 }
 
 function getStoredRole(): Role {
-  const storedRole = sessionStorage.getItem(
-    "mdms-role"
-  );
+  const storedRole = sessionStorage.getItem("mdms-role");
 
-  return isRole(storedRole)
-    ? storedRole
-    : "user";
+  return isRole(storedRole) ? storedRole : "user";
 }
 
 function AppLayout() {
@@ -39,9 +25,7 @@ function AppLayout() {
 
   const segment = location.pathname.split("/")[1];
 
-  const role: Role = isRole(segment)
-    ? segment
-    : getStoredRole();
+  const role: Role = isRole(segment) ? segment : getStoredRole();
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -65,10 +49,7 @@ function AppLayout() {
 
   return (
     <div className="app-layout">
-      <Header
-        role={role}
-        onToggleSidebar={toggleSidebar}
-      />
+      <Header role={role} onToggleSidebar={toggleSidebar} />
 
       <div className="app-body">
         {mobileOpen && (
@@ -80,11 +61,7 @@ function AppLayout() {
           />
         )}
 
-        <div
-          className={`sidebar-wrapper ${
-            mobileOpen ? "mobile-open" : ""
-          }`}
-        >
+        <div className={`sidebar-wrapper ${mobileOpen ? "mobile-open" : ""}`}>
           <Sidebar
             role={role}
             collapsed={collapsed}
@@ -93,7 +70,7 @@ function AppLayout() {
         </div>
 
         <main className="main-content">
-          <Suspense fallback={<p>Loading page...</p>}>
+          <Suspense fallback={<Loader message="Loading page..." />}>
             <Outlet />
           </Suspense>
         </main>
