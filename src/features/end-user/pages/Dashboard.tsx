@@ -13,6 +13,17 @@ import {
 import { getDailyConsumption } from "../services/consumptionService";
 
 import type { DailyData } from "../types/consumption";
+import { ChartCard } from "../../../shared/components";
+
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
 
 function Dashboard() {
   const [data, setData] = useState<DailyData[]>([]);
@@ -113,6 +124,56 @@ function Dashboard() {
               value={data.length}
               icon={<CalendarDays size={22} />}
             />
+          </div>
+
+          <div style={{ marginTop: 24 }}>
+            <ChartCard
+              title="Daily energy consumption"
+              subtitle="Energy usage recorded by your meter"
+              empty={data.length === 0}
+            >
+            <ResponsiveContainer
+              width="100%"
+              height="100%"
+            >
+            <LineChart data={data}>
+            <CartesianGrid
+              stroke="var(--color-chart-grid)"
+              strokeDasharray="3 3"
+            />
+
+            <XAxis
+              dataKey="date"
+              stroke="var(--color-text-muted)"
+            />
+
+            <YAxis
+              stroke="var(--color-text-muted)"
+            />
+
+            <Tooltip
+              contentStyle={{
+                backgroundColor:
+                  "var(--color-surface)",
+                borderColor:
+                  "var(--color-border)",
+                color: "var(--color-text)",
+              }}
+              labelStyle={{
+                color: "var(--color-text)",
+              }}
+            />
+
+            <Line
+              type="monotone"
+              dataKey="units"
+              name="Consumption (kWh)"
+              stroke="var(--color-chart-primary)"
+              strokeWidth={2}
+            />
+            </LineChart>
+            </ResponsiveContainer>
+            </ChartCard>
           </div>
 
           <section className="stat-card" style={{ marginTop: 24 }}>

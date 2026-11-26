@@ -8,18 +8,35 @@ import router from "./app/routes";
 
 import ThemeProvider from "./shared/theme/ThemeProvider";
 
-import "./shared/theme/theme.css";
-import "./shared/components/components.css";
+import ToastProvider from "./shared/toast/ToastProvider";
 
-import "./index.css";
 import Loader from "./shared/components/Loader";
 
-createRoot(document.getElementById("root")!).render(
+import "./shared/theme/theme.css";
+
+import "./index.css";
+
+import "./shared/components/components.css";
+
+import "./shared/components/advanced.css";
+
+createRoot(
+  document.getElementById("root")!
+).render(
   <StrictMode>
     <ThemeProvider>
-      <Suspense fallback={<Loader fullPage message="Loading MDMS..." />}>
-        <RouterProvider router={router} />
-      </Suspense>
+      <ToastProvider>
+        <Suspense
+          fallback={
+            <Loader
+              fullPage
+              message="Loading MDMS..."
+            />
+          }
+        >
+          <RouterProvider router={router} />
+        </Suspense>
+      </ToastProvider>
     </ThemeProvider>
-  </StrictMode>,
+  </StrictMode>
 );
