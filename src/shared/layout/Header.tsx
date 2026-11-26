@@ -5,6 +5,7 @@ import {
   Zap,
   Bell,
   Moon,
+  Sun,
   ChevronDown,
   UserCircle,
   User,
@@ -15,6 +16,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 
 import type { Role } from "../types/role";
+import { useTheme } from "../theme/useTheme";
 
 interface HeaderProps {
   role: Role;
@@ -28,6 +30,8 @@ function Header({
   const [profileOpen, setProfileOpen] = useState(false);
 
   const [language, setLanguage] = useState("en");
+
+  const { theme, toggleTheme } = useTheme();
 
   const profileRef = useRef<HTMLDivElement>(null);
 
@@ -121,12 +125,25 @@ function Header({
         </Link>
 
         <button
-          type="button"
-          className="icon-button"
-          aria-label="Theme switch coming in Stage 4"
-          disabled
+            type="button"
+            className="icon-button"
+            onClick={toggleTheme}
+            aria-label={
+                theme === "light"
+                    ? "Switch to dark mode"
+                    : "Switch to light mode"
+                }
+            title={
+                theme === "light"
+                    ? "Dark mode"
+                    : "Light mode"
+                }
         >
-          <Moon size={21} />
+        {theme === "light" ? (
+            <Moon size={21} />
+            ) : (
+            <Sun size={21} />
+        )}
         </button>
 
         <select
